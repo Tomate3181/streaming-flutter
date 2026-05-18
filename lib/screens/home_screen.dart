@@ -88,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: video['title'],
                     description: video['description'],
                     coverUrl: video['cover_url'],
+                    videoUrl: video['video_url'] ?? '',
                   );
                 },
               );

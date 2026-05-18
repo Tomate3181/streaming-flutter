@@ -82,6 +82,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       'title': video['title'],
                       'description': video['description'],
                       'cover_url': video['cover_url'],
+                      'video_url': video['video_url'] ?? '',
                     },
                   );
                 },

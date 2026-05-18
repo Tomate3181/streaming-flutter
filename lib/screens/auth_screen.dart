@@ -15,10 +15,17 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _isLogin = true;
   bool _isLoading = false;
 
   Future<void> _authenticate() async {
+    if (!_isLogin && _passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('As senhas não coincidem'), backgroundColor: AppColors.error),
+      );
+      return;
+    }
     setState(() => _isLoading = true);
     try {
       if (_isLogin) {
@@ -54,6 +61,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -99,6 +107,16 @@ class _AuthScreenState extends State<AuthScreen> {
                   isPassword: true,
                   prefixIcon: Icons.lock_outline,
                 ),
+                if (!_isLogin) ...[
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    label: 'Confirmar Senha',
+                    hint: '••••••••',
+                    controller: _confirmPasswordController,
+                    isPassword: true,
+                    prefixIcon: Icons.lock_outline,
+                  ),
+                ],
                 const SizedBox(height: 32),
                 CustomButton(
                   text: _isLogin ? 'Entrar' : 'Cadastrar',

@@ -7,6 +7,7 @@ class VideoCard extends StatelessWidget {
   final String title;
   final String description;
   final String coverUrl;
+  final String videoUrl;
 
   const VideoCard({
     super.key,
@@ -14,19 +15,21 @@ class VideoCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.coverUrl,
+    required this.videoUrl,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.goNamed(
+        context.pushNamed(
           'details',
           pathParameters: {'id': id.toString()},
           queryParameters: {
             'title': title,
             'description': description,
             'cover_url': coverUrl,
+            'video_url': videoUrl,
           },
         );
       },

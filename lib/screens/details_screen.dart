@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../core/constants.dart';
 import '../widgets/custom_button.dart';
 
@@ -8,6 +10,7 @@ class DetailsScreen extends StatefulWidget {
   final String title;
   final String description;
   final String coverUrl;
+  final String videoUrl;
 
   const DetailsScreen({
     super.key,
@@ -15,6 +18,7 @@ class DetailsScreen extends StatefulWidget {
     required this.title,
     required this.description,
     required this.coverUrl,
+    required this.videoUrl,
   });
 
   @override
@@ -70,6 +74,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
           const SnackBar(content: Text('Assistindo agora! (Adicionado ao Histórico)'), backgroundColor: AppColors.primary),
         );
       }
+      final uri = Uri.parse(widget.videoUrl);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Não foi possível abrir o vídeo.'), backgroundColor: AppColors.error),
+          );
+        }
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -89,6 +103,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
           SliverAppBar(
             expandedHeight: 300,
             pinned: true,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => context.pop(),
+            ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
                 widget.coverUrl,

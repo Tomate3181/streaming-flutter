@@ -33,12 +33,14 @@ final appRouter = GoRouter(
         final title = state.uri.queryParameters['title'] ?? '';
         final description = state.uri.queryParameters['description'] ?? '';
         final coverUrl = state.uri.queryParameters['cover_url'] ?? '';
+        final videoUrl = state.uri.queryParameters['video_url'] ?? '';
         
         return DetailsScreen(
           id: id,
           title: title,
           description: description,
           coverUrl: coverUrl,
+          videoUrl: videoUrl,
         );
       },
     ),

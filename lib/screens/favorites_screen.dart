@@ -84,6 +84,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       'title': video['title'],
                       'description': video['description'],
                       'cover_url': video['cover_url'],
+                      'video_url': video['video_url'] ?? '',
                     },
                   );
                 },
