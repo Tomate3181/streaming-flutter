@@ -11,13 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _onItemTapped(int index) {
-    if (index == 0) return;
-    if (index == 1) context.pushNamed('favorites');
-    if (index == 2) context.pushNamed('history');
-    if (index == 3) context.pushNamed('profile');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,17 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
             _buildCategorySection('Adicionados Recentemente', 'created_at'),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favoritos'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Histórico'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
-        ],
       ),
     );
   }

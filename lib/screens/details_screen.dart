@@ -74,13 +74,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
           const SnackBar(content: Text('Assistindo agora! (Adicionado ao Histórico)'), backgroundColor: AppColors.primary),
         );
       }
-      final uri = Uri.parse(widget.videoUrl);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
+      
+      try {
+        if (widget.videoUrl.isEmpty) {
+          throw Exception('URL vazia');
+        }
+        final uri = Uri.parse(widget.videoUrl);
+        await launchUrl(uri);
+      } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Não foi possível abrir o vídeo.'), backgroundColor: AppColors.error),
+            const SnackBar(content: Text('Não foi possível abrir o vídeo. Verifique se a URL existe.'), backgroundColor: AppColors.error),
           );
         }
       }

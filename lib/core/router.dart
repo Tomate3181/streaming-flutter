@@ -6,6 +6,7 @@ import '../screens/details_screen.dart';
 import '../screens/favorites_screen.dart';
 import '../screens/history_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/main_wrapper.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -20,10 +21,30 @@ final appRouter = GoRouter(
       name: 'auth',
       builder: (context, state) => const AuthScreen(),
     ),
-    GoRoute(
-      path: '/home',
-      name: 'home',
-      builder: (context, state) => const HomeScreen(),
+    ShellRoute(
+      builder: (context, state, child) => MainWrapper(child: child),
+      routes: [
+        GoRoute(
+          path: '/home',
+          name: 'home',
+          builder: (context, state) => const HomeScreen(),
+        ),
+        GoRoute(
+          path: '/favorites',
+          name: 'favorites',
+          builder: (context, state) => const FavoritesScreen(),
+        ),
+        GoRoute(
+          path: '/history',
+          name: 'history',
+          builder: (context, state) => const HistoryScreen(),
+        ),
+        GoRoute(
+          path: '/profile',
+          name: 'profile',
+          builder: (context, state) => const ProfileScreen(),
+        ),
+      ],
     ),
     GoRoute(
       path: '/details/:id',
@@ -43,21 +64,6 @@ final appRouter = GoRouter(
           videoUrl: videoUrl,
         );
       },
-    ),
-    GoRoute(
-      path: '/favorites',
-      name: 'favorites',
-      builder: (context, state) => const FavoritesScreen(),
-    ),
-    GoRoute(
-      path: '/history',
-      name: 'history',
-      builder: (context, state) => const HistoryScreen(),
-    ),
-    GoRoute(
-      path: '/profile',
-      name: 'profile',
-      builder: (context, state) => const ProfileScreen(),
     ),
   ],
 );
